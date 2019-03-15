@@ -21,6 +21,7 @@ public class CommentFeedActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<Comment> mComments = new ArrayList<Comment>();
+    private String username;
 
     // UI elements
     EditText commentInputBox;
@@ -37,8 +38,8 @@ public class CommentFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_feed);
 
-        // TODO: replace this with the name of the landmark the user chose
-        String landmarkName = "test landmark";
+        String landmarkName = getIntent().getStringExtra("statue name");
+        username = getIntent().getStringExtra("username");
 
         // sets the app bar's title
         setTitle(landmarkName + ": Posts");
@@ -50,6 +51,7 @@ public class CommentFeedActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setTitle(landmarkName);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler);
         mRecyclerView.setHasFixedSize(true);
@@ -58,24 +60,9 @@ public class CommentFeedActivity extends AppCompatActivity {
         // create an onclick for the send button
         setOnClickForSendButton();
 
-        // make some test comment objects that we add to the recycler view
-        makeTestComments();
-
         // use the comments in mComments to create an adapter. This will populate mRecyclerView
         // with a custom cell (with comment_cell_layout) for each comment in mComments
         setAdapterAndUpdateData();
-    }
-
-    // TODO: delete me
-    private void makeTestComments() {
-        String randomString = "hello world hello world ";
-        Comment newComment = new Comment(randomString, "test_user1", new Date());
-        Comment hourAgoComment = new Comment(randomString + randomString, "test_user2", new Date(System.currentTimeMillis() - (60 * 60 * 1000)));
-        Comment overHourComment = new Comment(randomString, "test_user3", new Date(System.currentTimeMillis() - (2 * 60 * 60 * 1000)));
-        Comment dayAgoComment = new Comment(randomString, "test_user4", new Date(System.currentTimeMillis() - (25 * 60 * 60 * 1000)));
-        Comment daysAgoComment = new Comment(randomString + randomString + randomString, "test_user5", new Date(System.currentTimeMillis() - (48 * 60 * 60 * 1000)));
-        mComments.add(newComment);mComments.add(hourAgoComment); mComments.add(overHourComment);mComments.add(dayAgoComment); mComments.add(daysAgoComment);
-
     }
 
     private void setOnClickForSendButton() {
@@ -102,11 +89,13 @@ public class CommentFeedActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // scroll to the last comment
-        mRecyclerView.smoothScrollToPosition(mComments.size() - 1);
+        if (mComments.size() > 0) {
+            mRecyclerView.smoothScrollToPosition(mComments.size() - 1);
+        }
     }
 
     private void postNewComment(String commentText) {
-        Comment newComment = new Comment(commentText, "one-sixty student", new Date());
+        Comment newComment = new Comment(commentText, username, new Date());
         mComments.add(newComment);
         setAdapterAndUpdateData();
     }

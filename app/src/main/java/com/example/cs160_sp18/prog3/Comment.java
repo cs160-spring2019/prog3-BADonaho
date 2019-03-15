@@ -33,8 +33,10 @@ public class Comment {
             return "1 hour";
         } else if (hoursInt > 1) {
             return Integer.toString(hoursInt) + " hours";
+        } else if (minutesInt > 1) {
+            return Integer.toString(minutesInt) + " minutes";
         } else {
-            return "less than an hour";
+            return "less than a minute";
         }
     }
 }

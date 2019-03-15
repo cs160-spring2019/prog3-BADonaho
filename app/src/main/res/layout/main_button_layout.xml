@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- layout file for a single cell in the comment recycler view -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/comment_cell_layout"
+    android:id="@+id/main_button_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
@@ -15,39 +13,44 @@
     android:paddingTop="@dimen/row_padding_vertical">
 
     <LinearLayout
-        android:id="@+id/ll"
+        android:id="@+id/linl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
-        <!-- username text view -->
         <TextView
-            android:id="@+id/username_text_view"
+            android:id="@+id/statue_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="username"
-            android:textColor="@color/green"
+            android:text="statue name"
+            android:textColor="#00F"
             android:textSize="16dp"
             android:textStyle="bold" />
-
-        <!-- time elapsed text view -->
-        <TextView
-            android:id="@+id/date_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right"
-            android:text="4 hours ago" />
     </LinearLayout>
 
-    <!-- comment body text -->
     <TextView
-        android:id="@+id/comment_text_view"
+        android:id="@+id/distance_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll"
+        android:layout_below="@+id/linl"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="this is some text that previews what a comments text would look like"
+        android:text="distance to statue will be written here"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/comment_button"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="comment"
+        android:layout_below="@+id/distance_text_view">
+    </Button>
+
+    <ImageView
+        android:id="@+id/statue_image_view"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/comment_button" />
+
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cs160_sp18.prog3">
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,9 +13,16 @@
             android:name=".CommentFeedActivity"
             android:label="@string/title_activity_comment_feed"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-            <!-- makes this the first activity presented on app launch. -->
-            <!-- you will want to move this intent filter to a different activity later -->
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Statue Button Feed"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login Feed"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
