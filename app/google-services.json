@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "86440708227",
+    "firebase_url": "https://prog3-badonaho.firebaseio.com",
+    "project_id": "prog3-badonaho",
+    "storage_bucket": "prog3-badonaho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86440708227:android:5c91787687d4ca71",
+        "android_client_info": {
+          "package_name": "com.example.paigeplander.cs160_prog3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86440708227-a0qjoefvqbgojud0vgjb427o9hnsmrg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.paigeplander.cs160_prog3",
+            "certificate_hash": "e23be318af356f9cdf29b98948afb0d0624e0f2e"
+          }
+        },
+        {
+          "client_id": "86440708227-96cr0oac26d2d7m9m1ml4gkt4rrs2idv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEp-5pZKJTc0gkFHgxZcnbNZ3I0ZTn3NA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86440708227-96cr0oac26d2d7m9m1ml4gkt4rrs2idv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
