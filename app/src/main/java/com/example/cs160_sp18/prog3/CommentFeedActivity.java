@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,6 +27,8 @@ public class CommentFeedActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private ArrayList<Comment> mComments = new ArrayList<Comment>();
     private String username;
+    private FirebaseDatabase database;
+    private DatabaseReference statueRef;
 
     // UI elements
     EditText commentInputBox;
@@ -29,17 +36,18 @@ public class CommentFeedActivity extends AppCompatActivity {
     Button sendButton;
     Toolbar mToolbar;
 
-    /* TODO: right now mRecyclerView is using hard coded comments.
-     * You'll need to add functionality for pulling and posting comments from Firebase
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_feed);
 
         String landmarkName = getIntent().getStringExtra("statue name");
         username = getIntent().getStringExtra("username");
+
+        FirebaseApp.initializeApp(this);
+        database = FirebaseDatabase.getInstance();
+        statueRef = database.getReference(landmarkName);
+
+        setContentView(R.layout.activity_comment_feed);
 
         // sets the app bar's title
         setTitle(landmarkName + ": Posts");
@@ -97,6 +105,9 @@ public class CommentFeedActivity extends AppCompatActivity {
     private void postNewComment(String commentText) {
         Comment newComment = new Comment(commentText, username, new Date());
         mComments.add(newComment);
+        DatabaseReference commentRef = statueRef.child(newComment.dateString());
+        commentRef.child("username").setValue(username);
+        commentRef.child("comment").setValue(commentText);
         setAdapterAndUpdateData();
     }
 
