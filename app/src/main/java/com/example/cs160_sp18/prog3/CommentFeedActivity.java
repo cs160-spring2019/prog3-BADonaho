@@ -6,14 +6,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +29,7 @@ public class CommentFeedActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private ArrayList<Comment> mComments = new ArrayList<Comment>();
+    private ArrayList<Comment> mComments;
     private String username;
     private FirebaseDatabase database;
     private DatabaseReference statueRef;
@@ -46,6 +50,24 @@ public class CommentFeedActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         database = FirebaseDatabase.getInstance();
         statueRef = database.getReference(landmarkName);
+        ValueEventListener statueRefListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mComments = new ArrayList<Comment>();
+                for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
+                    String timestamp = commentSnapshot.getKey();
+                    String username = (String) commentSnapshot.child("username").getValue();
+                    String commentText = (String) commentSnapshot.child("comment").getValue();
+                    mComments.add(new Comment(commentText, username, timestamp));
+                    setAdapterAndUpdateData();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("0", "cancelled");
+            }
+        };
+        statueRef.addValueEventListener(statueRefListener);
 
         setContentView(R.layout.activity_comment_feed);
 
@@ -67,10 +89,6 @@ public class CommentFeedActivity extends AppCompatActivity {
 
         // create an onclick for the send button
         setOnClickForSendButton();
-
-        // use the comments in mComments to create an adapter. This will populate mRecyclerView
-        // with a custom cell (with comment_cell_layout) for each comment in mComments
-        setAdapterAndUpdateData();
     }
 
     private void setOnClickForSendButton() {
@@ -103,9 +121,9 @@ public class CommentFeedActivity extends AppCompatActivity {
     }
 
     private void postNewComment(String commentText) {
-        Comment newComment = new Comment(commentText, username, new Date());
+        Comment newComment = new Comment(commentText, username, new Date().toString());
         mComments.add(newComment);
-        DatabaseReference commentRef = statueRef.child(newComment.dateString());
+        DatabaseReference commentRef = statueRef.child(newComment.timestamp);
         commentRef.child("username").setValue(username);
         commentRef.child("comment").setValue(commentText);
         setAdapterAndUpdateData();

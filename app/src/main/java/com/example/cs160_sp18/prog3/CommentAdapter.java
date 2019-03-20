@@ -65,7 +65,7 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 
     void bind(Comment comment) {
         mUsernameTextView.setText(comment.username);
-        mDateTextView.setText("Posted " + comment.dateString());
+        mDateTextView.setText("Posted " + comment.timestamp);
         mCommentTextView.setText(comment.text);
     }
 }

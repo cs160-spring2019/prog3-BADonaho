@@ -7,16 +7,12 @@ public class Comment {
 
     public String text;
     public String username;
-    public Date date;
+    public String timestamp;
 
-    Comment(String text, String username, Date date) {
+    Comment(String text, String username, String timestamp) {
         this.text = text;
         this.username = username;
-        this.date = date;
-    }
-
-    protected String dateString() {
-        return date.toString();
+        this.timestamp = timestamp;
     }
 }
 
